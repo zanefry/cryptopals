@@ -1,0 +1,16 @@
+#+TITLE: Notes for implementing Rijndael
+#+DATE:<2020-10-20 Tue>
+
+* ECB of a 128-bit block
+** Prior to first round
+*** generate round keys with key schedule
+*** add zeroth round key to block
+** Main rounds
+*** SubBytes
+*** ShiftRows
+*** MixColumns
+*** AddRoundKey
+** Final round
+*** SubBytes
+*** ShiftRows
+*** AddRoundKey
