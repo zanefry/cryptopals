@@ -1,3 +1,17 @@
+// * ECB of a 128-bit block
+// ** Prior to first round
+// *** generate round keys with key schedule
+// *** add zeroth round key to block
+// ** Main rounds
+// *** SubBytes
+// *** ShiftRows
+// *** MixColumns
+// *** AddRoundKey
+// ** Final round
+// *** SubBytes
+// *** ShiftRows
+// *** AddRoundKey
+
 #include "aes.h"
 
 #define ROTL8(x,shift) ((u8) ((x) << (shift)) | ((x) >> (8 - (shift))))
@@ -35,7 +49,7 @@ void init_tables()
 {
     static u8 initialized;
     if (initialized) return; else initialized = 1;
-    
+
     u8 a = 1, p = 0;
 
     // 3 is used as the generator
@@ -87,7 +101,7 @@ u32* expand_key(u32* key)
 	if (i < 4)
 	    rkeys[i] = key[i];
 	else if (i % 4 == 0)
-	    rkeys[i] = rkeys[i - 4] ^ sub_word(rot_word(rkeys[i - 1])) ^ rcons[i / 4 - 1]; 
+	    rkeys[i] = rkeys[i - 4] ^ sub_word(rot_word(rkeys[i - 1])) ^ rcons[i / 4 - 1];
 	else
 	    rkeys[i] = rkeys[i - 4] ^ rkeys[i - 1];
     }
@@ -173,7 +187,7 @@ void enc_block(u8* block, u8* key)
 	shift_rows(block);
 
 	// MixColumns
-	if (round != 10) mix_columns(block);  
+	if (round != 10) mix_columns(block);
 
 	// AddRoundKey
 	for (u8 i = 0; i < 16; i++)
@@ -192,7 +206,7 @@ void dec_block(u8* block, u8* key)
 	    block[i] ^= rkeys[16*round + i];
 
 	// MixColumns
-	if (round != 10) i_mix_columns(block);   
+	if (round != 10) i_mix_columns(block);
 
 	// ShiftRows
 	i_shift_rows(block);
