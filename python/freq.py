@@ -13,10 +13,12 @@ with open('../inputs/english_counts.txt') as f:
     english_freqs = {c: n / num_samples for c, n in english_counts.items()}
 
 def score(buf: bytes) -> float:
-    letters = [chr(b).lower() for b in buf if b <= 127 and chr(b).isalpha()]
-
-    if not letters:
+    if not all(chr(b).isascii() for b in buf):
         return 1000
+    if not all(chr(b).isprintable() or chr(b).isspace() for b in buf):
+        return 1000
+
+    letters = [chr(b).lower() for b in buf if chr(b).isalpha()]
 
     counts = {c: 0 for c in english_freqs}
     for c in letters:
