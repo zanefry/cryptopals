@@ -2,6 +2,7 @@
 # This line was xored with a single byte
 
 from utils import *
+from freq import score
 
 ciphertxt: bytes
 with open('../inputs/3.txt') as f:
@@ -15,5 +16,5 @@ for b in range(256):
         decoded = xor.decode('ascii')
         scores[decoded] = score(xor)
 
-for text, score in sorted(scores.items(), reverse=True, key=lambda item: item[1]):
+for text, score in sorted(scores.items(), key=lambda item: item[1]):
     print(f'{score}:\t{text}')
