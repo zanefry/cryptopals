@@ -10,7 +10,7 @@ with open('../inputs/3.txt') as f:
 
 scores = {}
 for b in range(256):
-    xor = bytes([b ^ c for i, c in enumerate(ciphertxt)])
+    xor = bytes([b ^ c for _, c in enumerate(ciphertxt)])
 
     if all(32 <= c <= 126 for c in xor):
         decoded = xor.decode('ascii')

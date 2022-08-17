@@ -43,7 +43,7 @@ key_bytes = []
 for slice in slices:
     scores = []
     for b in range(256):
-        xor = bytes([b ^ c for i, c in enumerate(slice)])
+        xor = bytes([b ^ c for _, c in enumerate(slice)])
         scores.append((score(xor), b))
 
     scores.sort()
