@@ -3,12 +3,10 @@
 
 from utils import *
 
-hex_input = ''
-correct_b64 = ''
+hex_input: str
+correct_b64: str
 with open('../inputs/1.txt') as f:
-    lines = f.readlines()
-    hex_input = lines[0].rstrip()
-    correct_b64 = lines[1].rstrip()
+    hex_input, correct_b64 = [l.rstrip() for l in f.readlines()]
 
 b64 = hex_to_b64(hex_input)
 

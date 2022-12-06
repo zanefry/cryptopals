@@ -3,8 +3,8 @@
 
 from utils import *
 
-h0:          str
-h1:          str
+h0: str
+h1: str
 correct_out: str
 
 with open('../inputs/2.txt') as f:
@@ -13,6 +13,8 @@ with open('../inputs/2.txt') as f:
 b0 = bytes.fromhex(h0)
 b1 = bytes.fromhex(h1)
 
-xord = bytes([b0[i] ^ b1[i] for i in range(len(b0))]).hex()
+num_bytes = len(b0)
 
-print('correct' if xord == correct_out else 'incorrect')
+result = bytes([x ^ y for x, y in zip(b0, b1)])
+
+print('correct' if result.hex() == correct_out else 'incorrect')

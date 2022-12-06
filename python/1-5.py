@@ -3,13 +3,12 @@
 
 from utils import *
 
-input: str
+hex_input: str
 correct_output: str
 with open('../inputs/5.txt') as f:
-    input, correct_output = f.read().split('\n\n')
+    hex_input, correct_output = f.read().split('\n\n')
     correct_output = correct_output.replace('\n', '')
 
-if repeating_xor(input.encode('ascii'), b'ICE').hex() == correct_output:
-    print('correct')
-else:
-    print('incorrect')
+result = repeating_xor(hex_input.encode('ascii'), b'ICE')
+
+print('correct' if result.hex() == correct_output else 'incorrect')

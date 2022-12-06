@@ -16,8 +16,4 @@ def hamming_dist(b0: bytes, b1: bytes) -> int:
     if len(b0) != len(b1):
         sys.exit('hamming_dist called on buffers of unequal length')
 
-    sum = 0
-    for i in range(len(b0)):
-        sum += (b0[i] ^ b1[i]).bit_count()
-
-    return sum
+    return sum([(x ^ y).bit_count() for x, y in zip(b0, b1)])

@@ -63,6 +63,7 @@ void init_tables()
     ltable[0] = 0;
 
     init_Sbox();
+
 }
 
 void init_Sbox()
@@ -73,7 +74,7 @@ void init_Sbox()
 
 u32 rot_word(u32 word)
 {
-    return (word >> 8) | (word << 24);
+    return (word << 24) | (word >> 8);
 }
 
 u32 sub_word(u32 word)
@@ -101,7 +102,7 @@ u32* expand_key(u32* key)
         if (i < 4)
             rkeys[i] = key[i];
         else if (i % 4 == 0)
-            rkeys[i] = rkeys[i - 4] ^ sub_word(rot_word(rkeys[i - 1])) ^ rcons[i / 4 - 1];
+            rkeys[i] = rkeys[i - 4] ^ sub_word(rot_word(rkeys[i - 1])) ^ rcons[i/4 - 1];
         else
             rkeys[i] = rkeys[i - 4] ^ rkeys[i - 1];
     }
@@ -141,9 +142,9 @@ void mix_columns(u8* block)
         u8* col = block + 4*i;
         u8 a[4], b[4];
 
-        for (int i = 0; i < 4; i++) {
-            a[i] = col[i];
-            b[i] = gmul(col[i], 2);
+        for (u8 j = 0; j < 4; j++) {
+            a[j] = col[j];
+            b[j] = gmul(col[j], 2);
         }
 
         col[0] = b[0] ^ a[3] ^ a[2] ^ b[1] ^ a[1];

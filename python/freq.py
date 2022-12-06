@@ -27,4 +27,6 @@ def score(buf: bytes) -> float:
     observed = [n / len(letters) for n in list(counts.values())]
     expected = list(english_freqs.values())
 
-    return stats.chisquare(f_obs=observed, f_exp=expected).statistic
+    chi_2 = stats.chisquare(f_obs=observed, f_exp=expected).statistic
+
+    return chi_2 * len(buf) / len(letters)
